@@ -1,3 +1,4 @@
+import warnings
 from future.utils import python_2_unicode_compatible
 
 from ..event_type import EventType
@@ -20,6 +21,11 @@ class ViberFailedRequest(ViberRequest):
 
     @property
     def meesage_token(self):
+        warnings.warn('Property `meesage_token` had typo and now is deprecated, please use `message_token` instead')
+        return self._message_token
+
+    @property
+    def message_token(self):
         return self._message_token
 
     @property
