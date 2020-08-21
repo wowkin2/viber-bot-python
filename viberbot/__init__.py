@@ -4,4 +4,3 @@ from .version import __version__
 
 __all__ = ['Api', 'BotConfiguration']
 __version__ = __version__
-
