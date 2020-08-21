@@ -1,5 +1,5 @@
 class BotConfiguration(object):
-    def __init__(self, auth_token, name, avatar, min_api_version):
+    def __init__(self, auth_token, name, avatar, min_api_version=1):
         self._auth_token = auth_token
         self._name = name
         self._avatar = avatar
