@@ -11,6 +11,11 @@ Or by adding the following to your `requirements.txt`:
 ```requirements.txt
 viberbot
 ```
+Or install latest version from GitHub:
+```requirements.txt
+git+https://github.com/Viber/viber-bot-python.git@master
+# git+https://github.com/wowkin2/viber-bot-python.git@develop
+```
 
 ## License
 
