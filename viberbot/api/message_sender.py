@@ -50,7 +50,7 @@ class MessageSender(object):
             endpoint, json.dumps(payload))
 
         if not result['status'] == 0:
-            raise Exception(u"failed with status: %s, message: %s", result['status'], result['status_message'])
+            raise Exception(u"failed with status: {0}, message: {1}".format(result['status'], result['status_message']))
 
         return result['message_token']
 
