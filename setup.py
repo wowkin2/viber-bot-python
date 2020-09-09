@@ -1,6 +1,10 @@
 from setuptools import setup
 
-exec(open('viberbot/version.py').read())
+__version__ = 'development'
+try:
+    exec(open('viberbot/version.py').read())
+except Exception as e:
+    print('Could not read version, used "development". Error: %s' % e)
 
 
 setup(

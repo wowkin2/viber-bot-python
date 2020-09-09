@@ -7,6 +7,10 @@ from .viber_request import ViberRequest
 
 
 class ViberSubscribedRequest(ViberRequest):
+    """
+    Class for ViberRequest with event_type = "subscribed".
+    https://developers.viber.com/docs/api/rest-bot-api/#subscribed
+    """
     def __init__(self):
         super(ViberSubscribedRequest, self).__init__(EventType.SUBSCRIBED)
         self._user = None
@@ -22,6 +26,11 @@ class ViberSubscribedRequest(ViberRequest):
     @property
     def user(self):
         return self._user
+
+    @property
+    def user_id(self):
+        """Shortcut to user.id property"""
+        return self._user.id
 
     @property
     def api_version(self):

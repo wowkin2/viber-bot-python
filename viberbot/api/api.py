@@ -6,7 +6,7 @@ import logging
 from .api_request_sender import ApiRequestSender
 from .consts import VIBER_BOT_API_URL, VIBER_BOT_USER_AGENT
 from .message_sender import MessageSender
-from .viber_requests import create_request
+from .viber_requests import EVENT_TYPE_TO_CLASS
 
 
 class Api(object):
@@ -49,10 +49,20 @@ class Api(object):
     def verify_signature(self, request_data, signature):
         return signature == self._calculate_message_signature(request_data)
 
+    @staticmethod
+    def create_request(request_dict):
+        if 'event' not in request_dict:
+            raise Exception("request is missing field 'event'")
+
+        if request_dict['event'] not in EVENT_TYPE_TO_CLASS:
+            raise Exception("event type '{0}' is not supported".format(request_dict['event']))
+
+        return EVENT_TYPE_TO_CLASS[request_dict['event']]().from_dict(request_dict)
+
     def parse_request(self, request_data):
         self._logger.debug("parsing request")
         request_dict = json.loads(request_data.decode() if isinstance(request_data, bytes) else request_data)
-        request = create_request(request_dict)
+        request = self.create_request(request_dict)
         self._logger.debug(u"parsed request=%s", request)
         return request
 

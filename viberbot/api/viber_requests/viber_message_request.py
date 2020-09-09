@@ -8,11 +8,14 @@ from .viber_request import ViberRequest
 
 
 class ViberMessageRequest(ViberRequest):
+    """
+    Class for ViberRequest with event_type = "message".
+    https://developers.viber.com/docs/api/rest-bot-api/#receive-message-from-user
+    """
     def __init__(self):
         super(ViberMessageRequest, self).__init__(EventType.MESSAGE)
         self._message = None
         self._sender = None
-        self._message_token = None
         self._chat_id = None
         self._reply_type = None
         self._silent = None
@@ -21,7 +24,6 @@ class ViberMessageRequest(ViberRequest):
         super(ViberMessageRequest, self).from_dict(request_dict)
         self._message = messages.get_message(request_dict['message'])
         self._sender = UserProfile().from_dict(request_dict['sender'])
-        self._message_token = request_dict['message_token']
         self._silent = request_dict.get('silent', None)
         self._reply_type = request_dict.get('reply_type', None)
         self._chat_id = request_dict.get('chat_id', None)
@@ -33,18 +35,25 @@ class ViberMessageRequest(ViberRequest):
 
     @property
     def sender(self):
+        """Unique Viber user id of the message sender"""
         return self._sender
 
     @property
-    def message_token(self):
-        return self._message_token
+    def user(self):
+        """Shortcut/alias to 'sender' property, to make all user attributes unified."""
+        return self.sender
 
     @property
-    def chat_id(self):
+    def user_id(self):
+        """Shortcut to user.id property"""
+        return self.sender.id
+
+    @property
+    def chat_id(self):  # No documentation about this field
         return self._chat_id
 
     @property
-    def reply_type(self):
+    def reply_type(self):  # No documentation about this field
         return self._reply_type
 
     @property

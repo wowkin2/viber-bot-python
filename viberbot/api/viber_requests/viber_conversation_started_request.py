@@ -6,9 +6,13 @@ from .viber_request import ViberRequest
 
 
 class ViberConversationStartedRequest(ViberRequest):
+    """
+    Class for ViberRequest with event_type = "conversation_started".
+    https://developers.viber.com/docs/api/rest-bot-api/#conversation-started
+    """
+
     def __init__(self):
         super(ViberConversationStartedRequest, self).__init__(EventType.CONVERSATION_STARTED)
-        self._message_token = None
         self._type = None
         self._context = None
         self._user = None
@@ -17,7 +21,6 @@ class ViberConversationStartedRequest(ViberRequest):
 
     def from_dict(self, request_dict):
         super(ViberConversationStartedRequest, self).from_dict(request_dict)
-        self._message_token = request_dict['message_token']
         self._type = request_dict['type']
         if 'context' in request_dict:
             self._context = request_dict['context']
@@ -30,26 +33,39 @@ class ViberConversationStartedRequest(ViberRequest):
 
     @property
     def user(self):
+        """UserProfile information (id, name, avatar, country, language, api_version)"""
         return self._user
 
     @property
+    def user_id(self):
+        """Shortcut to user.id property"""
+        return self._user.id
+
+    @property
     def type(self):
+        """
+        The specific type of conversation_started event.
+        Possible values: "open". Additional types may be added in the future
+        """
         return self._type
 
     @property
     def context(self):
+        """
+        Any additional parameters added to the deep link used to access the conversation passed as a string.
+        See deep link section for additional information:
+        https://developers.viber.com/docs/tools/deep-links
+        """
         return self._context
 
     @property
-    def message_token(self):
-        return self._message_token
-
-    @property
     def api_version(self):
+        """Max API version, matching the most updated user's device."""
         return self._api_version
 
     @property
     def subscribed(self):
+        """Indicated whether a user is already subscribed. True if subscribed and False otherwise."""
         return self._subscribed
 
     @python_2_unicode_compatible

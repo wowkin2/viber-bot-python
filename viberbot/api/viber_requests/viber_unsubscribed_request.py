@@ -6,6 +6,11 @@ from .viber_request import ViberRequest
 
 
 class ViberUnsubscribedRequest(ViberRequest):
+    """
+    Class for ViberRequest with event_type = "unsubscribed".
+    https://developers.viber.com/docs/api/rest-bot-api/#unsubscribed
+    """
+
     def __init__(self):
         super(ViberUnsubscribedRequest, self).__init__(EventType.UNSUBSCRIBED)
         self._user_id = None
